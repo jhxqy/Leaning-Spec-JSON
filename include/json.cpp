@@ -90,6 +90,20 @@ Token* Tokenizer::scan(){
            res+=data_[index_];
            }
            return makeToken(TokenType::Number, res);
+        }else if(data_[index_]==L'e'||data_[index_]==L'E'){
+            res+=data_[index_];
+            index_++;
+            if(EofTest()){
+                return makeToken(TokenType::Number, res);
+            }else{
+                if(data_[index_]==L'-'||Character::isDight(data_[index_])){
+                    do{
+                        res+=data_[index_];
+                        index_++;
+                    }while(!EofTest()&&Character::isDight(data_[index_]));
+                    return makeToken(TokenType::Number, res);
+                }
+            }
         }else{
             return makeToken(TokenType::Number, res);
         }
