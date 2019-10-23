@@ -66,7 +66,7 @@ Tokenizer::~Tokenizer(){
 
 Token* Tokenizer::scan(){
 
-    for(;;){
+    for(;;index_++){
         if(!EofTest()&& (data_[index_]==' '||data_[index_]=='\n'||data_[index_]=='\t')){
             continue;
         }else{

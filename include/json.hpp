@@ -13,6 +13,7 @@
 
 #include <string>
 #include <list>
+
 namespace JSON{
 namespace Imple{
 enum class TokenType{
@@ -27,9 +28,10 @@ struct Token{
     bool equal(TokenType t)const{
         return type_==t;
     }
-    bool equal(const Token &t)const{
-        return type_==t.type_&&lexeme_.compare(t.lexeme_)==0;
+    bool equal(const Token *t)const{
+        return type_==t->type_&&lexeme_.compare(t->lexeme_)==0;
     }
+    
 
 };
 
