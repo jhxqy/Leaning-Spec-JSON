@@ -6,11 +6,12 @@
 //  Copyright © 2019 贾皓翔. All rights reserved.
 //
 
-#include "json.hpp"
+#include "Tokenizer.hpp"
 #include <locale>
 #include <codecvt>
 namespace JSON{
 namespace Imple{
+
 
 std::wstring s2ws(const std::string &s){
     using T=std::codecvt_utf8<wchar_t>;
@@ -64,6 +65,15 @@ Tokenizer::~Tokenizer(){
     }
 }
 
+Tokenizer::Tokenizer(const Tokenizer&t):data_(t.data_),index_(t.index_),eof_(t.eof_){
+    tokens_.clear();
+    for(auto i:t.tokens_){
+        tokens_.push_back(new Token(*i));
+    }
+}
+
+
+
 Token* Tokenizer::scan(){
 
     for(;;index_++){
@@ -89,7 +99,7 @@ Token* Tokenizer::scan(){
            for(;!EofTest()&& Character::isDight(data_[index_]);index_++){
            res+=data_[index_];
            }
-           return makeToken(TokenType::Number, res);
+           return makeToken(TokenType::Double, res);
         }else if(data_[index_]==L'e'||data_[index_]==L'E'){
             res+=data_[index_];
             index_++;
@@ -101,11 +111,11 @@ Token* Tokenizer::scan(){
                         res+=data_[index_];
                         index_++;
                     }while(!EofTest()&&Character::isDight(data_[index_]));
-                    return makeToken(TokenType::Number, res);
+                    return makeToken(TokenType::Double, res);
                 }
             }
         }else{
-            return makeToken(TokenType::Number, res);
+            return makeToken(TokenType::Int, res);
         }
     }
     if(data_[index_]==L'"'){
@@ -121,7 +131,9 @@ Token* Tokenizer::scan(){
             res+=data_[index_];
             index_++;
         }
-        return makeToken(TokenType::String, res);
+        res=res.substr(1,res.size()-2);
+        return makeToken(TokenType::String,res);
+        
     }
     if(data_[index_]==L'T'||data_[index_]==L't'){
         if(data_.size()-index_>=5&&Character::isKey(data_, index_, L"true")){

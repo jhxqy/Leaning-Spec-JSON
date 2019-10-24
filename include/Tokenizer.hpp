@@ -6,8 +6,8 @@
 //  Copyright © 2019 贾皓翔. All rights reserved.
 //
 
-#ifndef json_hpp
-#define json_hpp
+#ifndef Tokenizer_hpp
+#define Tokenizer_hpp
 
 #include <stdio.h>
 
@@ -17,7 +17,7 @@
 namespace JSON{
 namespace Imple{
 enum class TokenType{
-    Number,String,Symbol,Bool,Null
+    Number,String,Symbol,Bool,Null,Int,Double
 };
 struct Token{
     TokenType type_;
@@ -64,10 +64,9 @@ public:
     Tokenizer(const std::string &s):data_(s2ws(s)),index_(0),eof_(false){
         
     }
+    Tokenizer(const Tokenizer&t);
     ~Tokenizer();
     Token* scan();
-    
-    
 };
 
 
