@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <string>
 #include <memory>
+#include <vector>
 #include "json.hpp"
 namespace JSON{
 enum class ValueType{
@@ -28,8 +29,8 @@ private:
     
     union{
         std::string *str;
-        Member* members;
-        Value* values;
+        std::vector<Member*> members;
+        std::vector<Value*> values;
         int i;
         double d;
         bool boolValue;
@@ -68,8 +69,8 @@ public:
     void setDouble(double d);
     void setNull();
     void setBool(bool b);
-    void setArray(Value *values,size_t size);
-    void setObject(Member *members,size_t size);
+    void setArray(std::vector<Value*> values);
+    void setObject(std::vector<Member*> members);
     void setString(const std::string &s);
     
 };
