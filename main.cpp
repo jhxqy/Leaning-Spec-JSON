@@ -59,26 +59,35 @@ void printValue(Value &v){
 
 int main(int argc, const char * argv[]) {
     string s=R"(
-    {"name":"jhx","age":20,"school":"常熟理工学院","专业":"网络工程","绩点":3.2,"电子设备":["平板","手机","电脑"],"单身状况":true}
+    {"name":"jhx","age":20,"school":"常熟理工学院","专业":"网络工程","绩点":3.2,"电子设备":["平板","手机","电脑"],"单身状况":true,"女友":null,"笔记本电脑":{"品牌":"apple","尺寸":"13"}}
     )";
 
     JsonParser Parser;
-    Value& value=Parser.Parse(s);
-    for(auto i:value.getKeyLists()){
-        cout<<i<<",";
+    Value& dom=Parser.Parse(s);
+
+    Value& name=dom["name"];
+    if(name.isString()){
+        cout<<name.getString()<<endl;
     }
-    cout<<endl;
-    if(value["name"].isString()){
-        cout<<value["name"].getString()<<endl;
-    }
-    Value& age=value["age"];
+    Value& age=dom["age"];
     cout<<boolalpha<<age.isNumber()<<" "<<age.isInt()<<" "<<age.isDouble()<<endl;
     cout<<age.getInt()<<endl;
-    Value& array=value["电子设备"];
+    Value& array=dom["电子设备"];
     for(auto i=0;i<array.getArraySize();i++){
         cout<<array[i].getString()<<endl;
     }
-    Value& solo=value["单身状况"];
+    Value& solo=dom["单身状况"];
     cout<<boolalpha<<solo.getBool()<<endl;
+    Value& girlfriend=dom["女友"];
+    cout<<boolalpha<<girlfriend.isNull()<<endl;
+    
+    cout<<dom.isObject()<<endl;
+    for(auto i:dom.getKeyLists()){
+        cout<<i<<",";
+    }
+    cout<<endl;
+    
+    cout<<dom["笔记本电脑"]["品牌"].getString()<<endl;
+    
     return 0;
 }

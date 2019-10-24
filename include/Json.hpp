@@ -135,7 +135,7 @@ class Document{
     Imple::Token *nowToken;
     Imple::Token* match(Imple::Token *t);
     Imple::Token* match(Imple::TokenType t);
-    
+    std::list<Value*> roots;
     Value* S();
     Value* array();
     Value* object();
@@ -151,6 +151,8 @@ class Document{
 public:
     Document();
     Value& Parse(const std::string &s);
+    Document(const Document&);
+    ~Document();
 };
 using JsonParser = Document;
 
