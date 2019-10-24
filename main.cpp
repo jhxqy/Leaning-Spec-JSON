@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include <string>
-#include "Json.hpp"
+#include "JSON.hpp"
 using namespace std;
 using namespace JSON;
 
