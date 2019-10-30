@@ -291,6 +291,8 @@ Value* Document:: Values(){
     switch (nowToken->type_) {
         case Imple::TokenType::String:
         case Imple::TokenType::Number:
+        case Imple::TokenType::Int:
+        case Imple::TokenType::Double:
         case Imple::TokenType::Null:
         case Imple::TokenType::Bool:
             nonEmptyValues(val);

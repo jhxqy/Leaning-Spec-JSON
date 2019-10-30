@@ -145,7 +145,7 @@ Token* Tokenizer::scan(){
     }
     if(data_[index_]==L'F'||data_[index_]==L'f'){
         if(data_.size()-index_>=5&&Character::isKey(data_, index_, L"false")){
-            index_+=4;
+            index_+=5;
             return makeToken(TokenType::Bool,L"false");
         }else{
             throw std::runtime_error("false error!");
